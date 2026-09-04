@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Agent 課程 · Zoe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@400;500;700&family=Noto+Serif+HK:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FBFBFA;
+    --surface: #FFFFFF;
+    --surface-2: #F7F6F3;
+    --text: #1A1A1A;
+    --text-muted: #787774;
+    --border: #EAEAEA;
+    --border-strong: #D4D3D0;
+    --pale-red-bg: #FDEBEC; --pale-red-text: #9F2F2D;
+    --pale-blue-bg: #E1F3FE; --pale-blue-text: #1F6C9F;
+    --pale-green-bg: #EDF3EC; --pale-green-text: #346538;
+    --pale-yellow-bg: #FBF3DB; --pale-yellow-text: #956400;
+    --accent: #1A1A1A;
+    --shadow-soft: 0 1px 3px rgba(0,0,0,0.04);
+    --shadow-hover: 0 2px 8px rgba(0,0,0,0.04);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans HK', sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  .serif { font-family: 'Noto Serif HK', serif; }
+  .container { max-width: 640px; margin: 0 auto; padding: 0 16px 48px; }
+
+  header {
+    text-align: center;
+    padding: 40px 16px 24px;
+  }
+  header .kicker {
+    font-size: 11px; letter-spacing: 0.18em; color: var(--text-muted);
+    text-transform: uppercase;
+  }
+  header h1 { font-size: 26px; font-weight: 700; margin-top: 6px; }
+  header .sub { font-size: 12px; color: var(--text-muted); margin-top: 6px; }
+
+  .section-title {
+    font-size: 13px; font-weight: 700; color: var(--text-muted);
+    letter-spacing: 0.06em; margin: 26px 2px 10px;
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: var(--shadow-soft);
+    margin-bottom: 10px;
+  }
+  .card-label { font-size: 11px; color: var(--text-muted); letter-spacing: 0.04em; }
+  .card-value { font-size: 20px; font-weight: 700; }
+  .card-value-sm { font-size: 16px; font-weight: 700; }
+  .tag {
+    display: inline-block; font-size: 11px; font-weight: 500;
+    padding: 2px 10px; border-radius: 999px; white-space: nowrap;
+  }
+  .tag-green { background: var(--pale-green-bg); color: var(--pale-green-text); }
+  .tag-blue { background: var(--pale-blue-bg); color: var(--pale-blue-text); }
+  .tag-yellow { background: var(--pale-yellow-bg); color: var(--pale-yellow-text); }
+  .tag-gray { background: var(--surface-2); color: var(--text-muted); }
+  .tag-red { background: var(--pale-red-bg); color: var(--pale-red-text); }
+
+  .progress-row { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin: 6px 0; }
+  .progress-label { font-size: 13px; font-weight: 500; }
+  .progress-num { font-size: 12px; color: var(--text-muted); }
+  .progress-track { height: 6px; background: var(--surface-2); border-radius: 999px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--accent); border-radius: 999px; transition: width 0.4s ease; }
+
+  .info-block p { font-size: 12.5px; color: var(--text); margin: 4px 0; }
+  .mini-note { font-size: 10.5px; color: var(--text-muted); margin-top: 10px; line-height: 1.6; }
+
+  .stage-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 12px 2px; border-bottom: 1px solid var(--border);
+  }
+  .stage-item:last-child { border-bottom: none; }
+  .stage-num {
+    font-family: 'Noto Serif HK', serif; font-size: 18px; font-weight: 700;
+    color: var(--text-muted); min-width: 30px; line-height: 1.4;
+  }
+  .stage-item.active .stage-num { color: var(--accent); }
+  .stage-item.done .stage-num { color: var(--pale-green-text); }
+  .stage-body { flex: 1; }
+  .stage-name { font-size: 13.5px; font-weight: 700; }
+  .stage-desc { font-size: 11.5px; color: var(--text-muted); margin-top: 2px; }
+  .stage-tag { margin-top: 6px; }
+
+  .lesson-head {
+    display: flex; justify-content: space-between; align-items: center;
+    cursor: pointer; -webkit-tap-highlight-color: transparent;
+  }
+  .lesson-head .left { flex: 1; }
+  .lesson-chev { color: var(--text-muted); font-size: 12px; transition: transform 0.2s ease; }
+  .lesson.open .lesson-chev { transform: rotate(90deg); }
+  .lesson-body { display: none; padding-top: 12px; border-top: 1px dashed var(--border); margin-top: 12px; }
+  .lesson.open .lesson-body { display: block; }
+
+  .kw {
+    font-size: 13.5px; font-weight: 700; margin: 16px 0 6px;
+    padding-left: 10px; border-left: 3px solid var(--accent);
+  }
+  .lesson-body p { font-size: 13px; margin: 5px 0; }
+  .term { margin: 12px 0; }
+  .term-name { font-size: 13.5px; font-weight: 700; }
+  .term-def { font-size: 12.5px; color: var(--text); }
+  .term-note { font-size: 12px; color: var(--pale-blue-text); background: var(--pale-blue-bg); border-radius: 8px; padding: 6px 10px; margin-top: 4px; }
+  .layer { display: flex; gap: 10px; margin: 12px 0; }
+  .layer-badge {
+    min-width: 44px; height: 26px; border-radius: 8px; background: var(--surface-2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; color: var(--text-muted);
+  }
+  .layer.active .layer-badge { background: var(--accent); color: #fff; }
+  .layer-body { flex: 1; }
+  .layer-name { font-size: 13.5px; font-weight: 700; }
+  .layer-def { font-size: 12.5px; }
+  .layer-eg { font-size: 11.5px; color: var(--text-muted); }
+  .motto {
+    background: var(--surface-2); border-radius: 12px; padding: 14px;
+    text-align: center; margin: 14px 0;
+  }
+  .motto .big { font-family: 'Noto Serif HK', serif; font-size: 16px; font-weight: 700; }
+  .motto .small { font-size: 11.5px; color: var(--text-muted); margin-top: 4px; }
+  .hw-box { border: 1.5px dashed var(--border-strong); border-radius: 12px; padding: 14px; margin: 12px 0; }
+  .hw-box .fmt {
+    background: var(--surface-2); border-radius: 8px; padding: 8px 10px;
+    font-size: 12px; margin: 8px 0; line-height: 1.6;
+  }
+  .plist { padding-left: 18px; font-size: 12.5px; }
+  .plist li { margin: 3px 0; }
+
+  footer {
+    text-align: center; padding: 28px 16px 40px;
+    font-size: 11px; color: var(--text-muted); line-height: 1.8;
+  }
+  footer a { color: var(--pale-blue-text); text-decoration: none; font-weight: 500; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="kicker">Personal AI Portfolio Course</div>
+  <h1>🤖 AI Agent 產品導師課程</h1>
+  <div class="sub">商業化 AI 產品 0 → 1 · 技術方案 × 市場價值 × 盈利邏輯</div>
+</header>
+
+<div class="container">
+
+  <!-- 課程現況 -->
+  <section>
+    <p class="section-title">課程現況</p>
+    <div class="card">
+      <div class="progress-row">
+        <span class="progress-label">當前進度</span>
+        <span class="tag tag-yellow" id="cStageTag">—</span>
+      </div>
+      <div class="progress-track" style="margin:8px 0 10px;">
+        <div class="progress-fill" id="cStageBar" style="width:10%;"></div>
+      </div>
+      <div class="progress-row">
+        <span class="progress-label">📘 當前課堂</span>
+        <span class="progress-num" id="cLesson">—</span>
+      </div>
+      <div class="progress-row">
+        <span class="progress-label">📋 作業狀態</span>
+        <span id="cHwStatus">—</span>
+      </div>
+      <div class="progress-row">
+        <span class="progress-label">⏰ 自動運行</span>
+        <span class="progress-num">週一至五 08:00 · 週末休息</span>
+      </div>
+      <div class="mini-note">
+        📊 打卡＋學習成果留言 → <a href="https://zoematszting-bit.github.io/dashboard/#agent" style="color:var(--pale-blue-text); font-weight:500;">Dashboard「Agent」tab</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 課程總目標 -->
+  <section>
+    <p class="section-title">課程總目標</p>
+    <div class="card">
+      <div class="info-block">
+        <p><strong>技術側</strong>：Agent 架構設計 · 容錯機制 · 效果評測 · 成本管控</p>
+        <p><strong>商業側</strong>：市場分析 · 用戶定位 · 競品差異化 · 定價策略 · 獲客方式</p>
+        <p><strong>最終產出</strong>：可對外發布嘅個人 AI 作品集，面試講得通「技術＋市場＋盈利」全鏈路</p>
+      </div>
+      <div class="mini-note">
+        案例只用 Zoe 自己嘅產品：打字網站 · Dashboard · 菜單網站 · 考試系統 · 瑜伽筆記 · 學費追蹤 ＋ 計劃中嘅小說 AI 工具 · 文生影片助手
+      </div>
+    </div>
+  </section>
+
+  <!-- 十大階段 -->
+  <section>
+    <p class="section-title">十大階段 ·循序漸進</p>
+    <div class="card" id="stageList"></div>
+  </section>
+
+  <!-- 課堂內容 -->
+  <section>
+    <p class="section-title">課堂內容 · 持續更新</p>
+    <div id="lessonList"></div>
+  </section>
+
+  <!-- 過關標準 -->
+  <section>
+    <p class="section-title">過關標準</p>
+    <div class="card">
+      <div class="info-block">
+        <p>① <strong>方案選型正確</strong>：揀啱層級＋講到理由</p>
+        <p>② <strong>市場判斷有據</strong>：目標用戶＋付費理由</p>
+        <p>③ <strong>風險識別</strong>：幻覺／成本／失敗路徑至少一項</p>
+        <p>④ <strong>交付齊全</strong>：按作業模板交齊</p>
+      </div>
+      <div class="mini-note">未過關出鞏固題（唔同場景反覆出）· 連續 2 次過關先算掌握</div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  課程檔案：Zoe工作输出/Agent課程/<br>
+  指令 v2.1 · 每課由 ZCode 派發後更新此頁<br>
+  <span id="verTag">v1 · 2026.09.04</span><br><br>
+  <a href="https://zoematszting-bit.github.io/dashboard/#agent">→ 返 Dashboard 打卡＋留言</a>
+</footer>
+
+<script>
+// ===== COURSE_SEED：ZCode 每次派課／點評後更新（同 dashboard AGENT_SEED 同步）=====
+const COURSE = {
+  version: '2026-09-04-v1',
+  currentStage: 1,
+  totalStages: 10,
+  currentLesson: '第1課｜LLM基礎名詞＋五層方案階梯',
+  homeworkStatus: '待提交',
+  stages: [
+    { n: 1, name: '基礎認知＆五層方案決策框架', desc: 'LLM名詞 × Prompt/RAG/Workflow/單Agent/多Agent 點樣揀', status: 'active' },
+    { n: 2, name: 'Prompt工程 → 上下文工程', desc: '優化小說／試題提示詞，對比市面付費工具', status: 'todo' },
+    { n: 3, name: 'RAG 完整產品設計', desc: '瑜伽筆記／考試系統私有知識庫，細分市場付費分析', status: 'todo' },
+    { n: 4, name: 'Function Calling＆MCP', desc: '工具調用＋重試容錯，核算成本與定價空間', status: 'todo' },
+    { n: 5, name: 'Agent 三大核心模塊', desc: '記憶管理｜任務拆解｜自我糾錯，改造小說工具', status: 'todo' },
+    { n: 6, name: 'Agent 主流架構', desc: 'ReAct／CoT／單 vs 多Agent，小說→劇本→影片工作流', status: 'todo' },
+    { n: 7, name: '效果評測＋低成本驗證', desc: '量化指標＋Landing Page／假門／社群驗證', status: 'todo' },
+    { n: 8, name: '小型迭代實戰', desc: '舊工具改造 Agent MVP＋商業可行性報告', status: 'todo' },
+    { n: 9, name: '完整商業專案', desc: '小說文字轉影片全鏈路：PRD＋原型＋市場＋MVP計劃', status: 'todo' },
+    { n: 10, name: '作品集＋面試 pitch', desc: '敘述邏輯＋技術壓力題＋市場盈利質疑題', status: 'todo' }
+  ],
+  lessons: [
+    {
+      n: 1, stage: 1, date: '2026-09-04', open: true,
+      title: 'LLM 基礎名詞 × 五層方案階梯',
+      body: `
+        <div class="kw">📌 學習目標</div>
+        <ul class="plist">
+          <li>識得 5 個產品視角必備 LLM 名詞</li>
+          <li>掌握「五層方案階梯」：判斷功能應該用邊層方案</li>
+          <li>完成首個雙維度作業：6 個產品方案配對＋市場直覺</li>
+        </ul>
+
+        <div class="kw">Part A｜五個必識名詞</div>
+        <div class="term">
+          <div class="term-name">🔹 Token（詞元）</div>
+          <div class="term-def">AI 讀寫文字嘅計費單位，大約 1 個中文字 ≈ 1-2 token</div>
+          <div class="term-note">產品含義：AI 每次處理嘢都係錢——「呢個功能每次呼叫成本幾多」係設計任何 AI 功能前嘅第一條數</div>
+        </div>
+        <div class="term">
+          <div class="term-name">🔹 上下文窗口（Context Window）</div>
+          <div class="term-def">AI 一次過「記得」嘅字數上限，超額就會失憶</div>
+          <div class="term-note">產品含義：瑜伽筆記成套教材塞唔晒入一次對話——要設計「每次俾 AI 睇邊部分」</div>
+        </div>
+        <div class="term">
+          <div class="term-name">🔹 幻覺（Hallucination）</div>
+          <div class="term-def">AI 自信老作——答案流暢但係錯</div>
+          <div class="term-note">產品含義：考試系統出錯答案＝用戶即走；營養分析「食物熱量必須查證」就係典型人工兜底設計</div>
+        </div>
+        <div class="term">
+          <div class="term-name">🔹 溫度（Temperature）</div>
+          <div class="term-def">創意度旋鈕：高溫多變化、低溫穩定</div>
+          <div class="term-note">產品含義：小說工具要高溫（求驚喜）、考試出題要低溫（求準確）——同一參數，兩個產品需求相反</div>
+        </div>
+        <div class="term">
+          <div class="term-name">🔹 System Prompt（系統提示）</div>
+          <div class="term-def">AI 嘅「人設＋規則書」，寫喺對話之前，優先級最高</div>
+          <div class="term-note">產品含義：你已經日日用緊——AGENTS.md 就係 ZCode 嘅 system prompt；營養分析規則、課程指令都係同一技術</div>
+        </div>
+
+        <div class="kw">Part B｜五層方案階梯</div>
+        <div class="layer">
+          <div class="layer-badge">第1層</div>
+          <div class="layer-body">
+            <div class="layer-name">普通 Prompt</div>
+            <div class="layer-def">一問一答，冇記憶、冇工具</div>
+            <div class="layer-eg">例：叫 AI 幫打字網站寫推廣文案</div>
+          </div>
+        </div>
+        <div class="layer">
+          <div class="layer-badge">第2層</div>
+          <div class="layer-body">
+            <div class="layer-name">RAG（檢索增強）</div>
+            <div class="layer-def">AI 答之前先查你嘅私有資料庫</div>
+            <div class="layer-eg">例：瑜伽筆記問答——先查你教材先作答</div>
+          </div>
+        </div>
+        <div class="layer">
+          <div class="layer-badge">第3層</div>
+          <div class="layer-body">
+            <div class="layer-name">Workflow（固定流程）</div>
+            <div class="layer-def">幾個 AI 步驟照劇本串埋，流程開發者話事</div>
+            <div class="layer-eg">例：每日 10:00 自動出 Office 練習卷＋批改＋更新弱點</div>
+          </div>
+        </div>
+        <div class="layer">
+          <div class="layer-badge">第4層</div>
+          <div class="layer-body">
+            <div class="layer-name">單 Agent</div>
+            <div class="layer-def">AI 自己決定步驟＋可以調用工具</div>
+            <div class="layer-eg">例：「更新 dashboard」→自己判斷寫邊個 SEED→push→curl 驗證</div>
+          </div>
+        </div>
+        <div class="layer">
+          <div class="layer-badge">第5層</div>
+          <div class="layer-body">
+            <div class="layer-name">多 Agent</div>
+            <div class="layer-def">幾個 AI 分工協作，各有角色互相交接</div>
+            <div class="layer-eg">例：小說→劇本→分鏡→影片提示詞生產線（階段 9 主角）</div>
+          </div>
+        </div>
+
+        <div class="kw">五項結構</div>
+        <ul class="plist">
+          <li><strong>基礎定義</strong>：見上方五層</li>
+          <li><strong>解決咩痛點</strong>：「功能需求 vs 開發成本」配對——揀啱＝最平最穩；揀錯＝過度工程或力不從心</li>
+          <li><strong>適合場景</strong>：考試出題＝第1層夠｜瑜伽筆記問答＝第2層｜學費追蹤提醒＝第3層｜小說→影片＝第4-5層</li>
+          <li><strong>唔適用情況</strong>：流程固定唔好上 Agent（貴＋唔穩）；冇私有資料唔使 RAG</li>
+          <li><strong>市場價值</strong>：層級越高＝成本越高＋越難穩定＝需要越高付費意願支撐；B2C 細工具停喺 1-3 層先易盈利</li>
+        </ul>
+
+        <div class="motto">
+          <div class="big">「能 Prompt 唔 RAG，能 Workflow 唔 Agent」</div>
+          <div class="small">複雜度係成本，唔係賣點——用戶為「解決問題」俾錢，唔為架構俾錢</div>
+        </div>
+
+        <div class="hw-box">
+          <div class="term-name">✍️ 第一課作業（雙維度實戰）</div>
+          <div class="fmt">格式：產品｜最想加嘅 AI 功能｜揀嘅層級｜理由（1句）｜市場直覸（1句：邊類人會用＋會唔會俾錢）</div>
+          <p style="font-size:12.5px; font-weight:500;">6 個產品：</p>
+          <ul class="plist">
+            <li>① 打字練習網站</li>
+            <li>② 後台 Dashboard</li>
+            <li>③ 菜單展示網站</li>
+            <li>④ 考試試題系統</li>
+            <li>⑤ 瑜伽訓練筆記</li>
+            <li>⑥ 學費收款追蹤</li>
+          </ul>
+          <div class="fmt">範例（僅示範格式）：<br>菜單展示網站｜自動將菜品描述改寫成美食文案｜第1層普通Prompt｜一次轉換冇記憶需求｜餐廳老闆未必單獨俾錢，做套餐附加功能可能有吸引力</div>
+          <div class="mini-note" style="margin-top:8px;">過關線：層級選擇冇方向性錯誤＋每個產品都講到理由</div>
+        </div>
+      `
+    }
+  ]
+};
+
+// ===== Render =====
+function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function render() {
+  const pct = Math.round(COURSE.currentStage / COURSE.totalStages * 100);
+  document.getElementById('cStageTag').textContent = '階段 ' + COURSE.currentStage + ' / ' + COURSE.totalStages;
+  document.getElementById('cStageBar').style.width = pct + '%';
+  document.getElementById('cLesson').textContent = COURSE.currentLesson;
+  const hw = COURSE.homeworkStatus;
+  document.getElementById('cHwStatus').innerHTML = hw === '已過關'
+    ? '<span class="tag tag-green">✅ 已過關</span>'
+    : hw === '已提交' ? '<span class="tag tag-blue">📥 已提交待點評</span>'
+    : '<span class="tag tag-yellow">✍️ 待提交</span>';
+
+  document.getElementById('stageList').innerHTML = COURSE.stages.map(s => {
+    const cls = s.status === 'done' ? 'done' : s.status === 'active' ? 'active' : '';
+    const tag = s.status === 'done' ? '<span class="tag tag-green">✅ 完成</span>'
+      : s.status === 'active' ? '<span class="tag tag-blue">🔵 進行中</span>'
+      : '<span class="tag tag-gray">⚪ 未開始</span>';
+    return '<div class="stage-item ' + cls + '">' +
+      '<div class="stage-num">' + String(s.n).padStart(2, '0') + '</div>' +
+      '<div class="stage-body"><div class="stage-name">' + esc(s.name) + '</div>' +
+      '<div class="stage-desc">' + esc(s.desc) + '</div>' +
+      '<div class="stage-tag">' + tag + '</div></div></div>';
+  }).join('');
+
+  document.getElementById('lessonList').innerHTML = COURSE.lessons.map(l =>
+    '<div class="card lesson' + (l.open ? ' open' : '') + '" id="lesson-' + l.n + '">' +
+    '<div class="lesson-head" onclick="this.parentNode.classList.toggle(\'open\')">' +
+    '<div class="left"><div class="card-label">階段 ' + l.stage + ' · 第 ' + l.n + ' 課 · ' + l.date + '</div>' +
+    '<div class="card-value-sm">' + esc(l.title) + '</div></div>' +
+    '<div class="lesson-chev">▶</div></div>' +
+    '<div class="lesson-body">' + l.body + '</div></div>'
+  ).join('');
+
+  document.getElementById('verTag').textContent = 'v1 · ' + COURSE.version.slice(0, 10).replace(/-/g, '.');
+}
+render();
+</script>
+
+</body>
+</html>
