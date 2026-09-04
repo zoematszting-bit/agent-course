@@ -5,28 +5,29 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Agent 課程 · Zoe</title>
 <meta name="description" content="AI Agent 產品導師課程 · 商業化 AI 產品 0→1 · 技術方案 × 市場價值 × 盈利邏輯">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23f3edde'/%3E%3Crect x='3' y='3' width='58' height='58' rx='12' fill='none' stroke='%23b08d57' stroke-width='2'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='34' font-weight='700' fill='%23b08d57' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23e9eef2'/%3E%3Crect x='3' y='3' width='58' height='58' rx='12' fill='none' stroke='%237e94ab' stroke-width='2'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='34' font-weight='700' fill='%23b08d57' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@400;500;700&family=Noto+Serif+HK:wght@600;700;900&display=swap" rel="stylesheet">
 <style>
   :root {
-    /* C4 深色莫蘭迪（暖炭版 · 非 news 白）*/
-    --gold: #c8a76a;        /* 淺金 · 主（深底提亮）*/
-    --gold-light: #dbbf85;  /* 亮金 · 點綴 */
-    --gold-pale: rgba(200, 167, 106, 0.14);
-    --blue: #8fa5ba;        /* 霧藍 · 輔（深底提亮）*/
-    --blue-pale: rgba(143, 165, 186, 0.13);
-    --charcoal: #3f3a32;    /* 暖炭（舊文字色 · 保留）*/
-    --ink: #ece5d3;         /* 奶油白 · 文字（反轉做字色）*/
-    --cream: #2e2921;       /* 暖深棕 · 底（yoga 書封同色）*/
-    --cream-deep: #262119;  /* 更深一步 */
-    --surface: #383327;     /* 暖炭面板 */
-    --silver: #6b6353;      /* 暖銀灰 · 分隔線 */
-    --hairline: rgba(236, 229, 211, 0.13);
-    --terra: #c98d77;       /* 陶土 · 功能/行動（深底提亮）*/
-    --terra-pale: rgba(201, 141, 119, 0.12);
-    --deep: #f3edde;        /* 奶油白（反轉做頁腳帶底色）*/
-    --muted: #a89f8c;       /* 暖灰文字 */
+    /* 霧藍淺色莫蘭迪（幸運色：白金銀 × 黑藍 · 金水相生）*/
+    --gold: #b08d57;        /* 古銅金 · 主點綴 */
+    --gold-light: #c8a76a;  /* 淺金 */
+    --gold-pale: #efe8da;   /* 淺金底 */
+    --blue: #7e94ab;        /* 幸運霧藍 · 輔→主導色 */
+    --blue-deep: #5c7186;   /* 深霧藍 · 強調/連結 */
+    --blue-pale: #e2e9ef;   /* 霧藍底 */
+    --charcoal: #3f3a32;    /* 暖炭（保留）*/
+    --ink: #3b4048;         /* 霧藍炭 · 文字 */
+    --cream: #e9eef2;       /* 霧藍白 · 底（涼色，非報紙暖白）*/
+    --cream-deep: #dde4ea;  /* 深一步 */
+    --surface: #f6f8fa;     /* 面板 */
+    --silver: #aab6c1;      /* 冷銀灰 · 分隔線 */
+    --hairline: #d6dde4;    /* 幼線 */
+    --terra: #b37660;       /* 陶土 · 功能/行動 */
+    --terra-pale: #f2e4dc;  /* 陶土底 */
+    --deep: #46586b;        /* 深霧藍 · 頁腳帶 */
+    --muted: #7c8792;       /* 霧灰文字 */
     --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -45,7 +46,7 @@
   /* 紙感噪點 */
   body::before {
     content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0;
-    opacity: 0.05;
+    opacity: 0.032;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
   }
   header, .container, footer { position: relative; z-index: 1; }
@@ -98,10 +99,10 @@
     border-radius: 12px;
     padding: 18px 18px 16px;
     margin-bottom: 12px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18);
+    box-shadow: 0 1px 3px rgba(52, 70, 88, 0.05);
     transition: box-shadow 0.25s var(--ease-out);
   }
-  .panel:hover { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.28); }
+  .panel:hover { box-shadow: 0 4px 12px rgba(52, 70, 88, 0.08); }
 
   .bar-block {
     border-left: 3px solid var(--gold);
@@ -130,9 +131,9 @@
     padding: 2px 10px; border-radius: 3px; white-space: nowrap;
     letter-spacing: 0.05em;
   }
-  .tag-gold { background: var(--gold-pale); color: var(--gold); border: 1px solid rgba(200, 167, 106, 0.42); }
-  .tag-blue { background: var(--blue-pale); color: var(--blue); border: 1px solid rgba(143, 165, 186, 0.4); }
-  .tag-terra { background: var(--terra-pale); color: var(--terra); border: 1px solid rgba(201, 141, 119, 0.42); }
+  .tag-gold { background: var(--gold-pale); color: #8a6b3d; border: 1px solid #ddcba6; }
+  .tag-blue { background: var(--blue-pale); color: var(--blue-deep); border: 1px solid #c4d1dc; }
+  .tag-terra { background: var(--terra-pale); color: var(--terra); border: 1px solid #dfc5b6; }
   .tag-gray { background: var(--cream-deep); color: var(--muted); border: 1px solid var(--hairline); }
 
   .progress-track { height: 5px; background: var(--cream-deep); border: 1px solid var(--hairline); border-radius: 999px; overflow: hidden; }
@@ -140,7 +141,7 @@
 
   .info-block p { font-size: 12.5px; margin: 5px 0; }
   .mini-note { font-size: 10.5px; color: var(--muted); margin-top: 10px; line-height: 1.7; }
-  a { color: var(--blue); }
+  a { color: var(--blue-deep); }
 
   /* ===== 十大階段 ===== */
   .stage-item {
@@ -159,7 +160,7 @@
   .stage-name { font-size: 13px; font-weight: 700; letter-spacing: 0.02em; }
   .stage-desc { font-size: 11px; color: var(--muted); margin-top: 1px; }
   .stage-tag { margin-top: 5px; }
-  .stage-item.active { background: var(--gold-pale); border: 1px solid rgba(200, 167, 106, 0.42); }
+  .stage-item.active { background: var(--gold-pale); border: 1px solid #ddcba6; }
   .stage-item.active .stage-num { color: var(--gold); border-color: var(--gold-light); background: var(--surface); }
   .stage-item.active .stage-name { color: var(--deep); }
   .stage-item.done .stage-num { color: var(--gold); border-color: var(--gold-light); }
@@ -204,7 +205,7 @@
   }
   .term-def { font-size: 12.5px; margin-top: 2px; }
   .term-note {
-    font-size: 11.5px; color: var(--blue); background: var(--blue-pale);
+    font-size: 11.5px; color: var(--blue-deep); background: var(--blue-pale);
     border-left: 3px solid var(--blue);
     border-radius: 0 8px 8px 0; padding: 7px 11px; margin-top: 7px; line-height: 1.65;
   }
@@ -215,7 +216,7 @@
     display: flex; align-items: center; justify-content: center;
     font-size: 11px; font-weight: 700; color: var(--muted); letter-spacing: 0.08em;
   }
-  .layer.hot .layer-badge { background: var(--gold); border-color: var(--gold); color: #2e2921; }
+  .layer.hot .layer-badge { background: var(--gold); border-color: var(--gold); color: #fdfaf2; }
   .layer-body { flex: 1; }
   .layer-name { font-size: 13.5px; font-weight: 700; }
   .layer-def { font-size: 12.5px; }
@@ -243,12 +244,12 @@
   }
   .hw-tag {
     position: absolute; top: -9px; left: 14px;
-    background: var(--terra); color: #2e2921;
-    font-size: 10px; letter-spacing: 0.22em; font-weight: 700;
+    background: var(--terra); color: #fdf6f1;
+    font-size: 10px; letter-spacing: 0.22em; font-weight: 500;
     padding: 1px 10px; border-radius: 3px;
   }
   .hw-box .fmt {
-    background: rgba(236, 229, 211, 0.07); border: 1px solid rgba(201, 141, 119, 0.38);
+    background: rgba(255, 255, 255, 0.55); border: 1px solid #dfc5b6;
     border-radius: 8px; padding: 8px 11px; font-size: 11.5px; margin: 8px 0; line-height: 1.65;
   }
   .plist { padding-left: 18px; font-size: 12.5px; }
@@ -260,12 +261,12 @@
 
   /* ===== 頁腳（書封深棕帶）===== */
   footer {
-    background: var(--deep); color: #7a7263;
+    background: var(--deep); color: #c9d4de;
     text-align: center; padding: 30px 20px 44px;
     font-size: 10.5px; letter-spacing: 0.06em; line-height: 2;
   }
-  footer .gold-rule { width: 40px; height: 1px; background: #b08d57; margin: 0 auto 14px; }
-  footer a { color: #96754a; text-decoration: none; font-weight: 500; }
+  footer .gold-rule { width: 40px; height: 1px; background: var(--gold-light); margin: 0 auto 14px; }
+  footer a { color: var(--gold-light); text-decoration: none; font-weight: 500; }
   footer a:active { opacity: 0.7; }
 </style>
 </head>
@@ -354,7 +355,7 @@
 <script>
 // ===== COURSE_SEED：ZCode 每次派課／點評後更新（同 dashboard AGENT_SEED 同步）=====
 const COURSE = {
-  version: '2026-09-05-v3',
+  version: '2026-09-05-v4',
   currentStage: 1,
   totalStages: 10,
   currentLesson: '第1課｜LLM基礎名詞＋五層方案階梯',
@@ -523,7 +524,7 @@ function render() {
     '<div class="lesson-body">' + l.body + '</div></div>'
   ).join('');
 
-  document.getElementById('verTag').textContent = 'v3 深色莫蘭迪 · ' + COURSE.version.slice(0, 10).replace(/-/g, '.');
+  document.getElementById('verTag').textContent = 'v4 霧藍莫蘭迪 · ' + COURSE.version.slice(0, 10).replace(/-/g, '.');
 }
 render();
 
