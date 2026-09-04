@@ -4,242 +4,356 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Agent 課程 · Zoe</title>
+<meta name="description" content="AI Agent 產品導師課程 · 商業化 AI 產品 0→1 · 技術方案 × 市場價值 × 盈利邏輯">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23f3edde'/%3E%3Crect x='3' y='3' width='58' height='58' rx='12' fill='none' stroke='%23b08d57' stroke-width='2'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='34' font-weight='700' fill='%23b08d57' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@400;500;700&family=Noto+Serif+HK:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@400;500;700&family=Noto+Serif+HK:wght@600;700;900&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #FBFBFA;
-    --surface: #FFFFFF;
-    --surface-2: #F7F6F3;
-    --text: #1A1A1A;
-    --text-muted: #787774;
-    --border: #EAEAEA;
-    --border-strong: #D4D3D0;
-    --pale-red-bg: #FDEBEC; --pale-red-text: #9F2F2D;
-    --pale-blue-bg: #E1F3FE; --pale-blue-text: #1F6C9F;
-    --pale-green-bg: #EDF3EC; --pale-green-text: #346538;
-    --pale-yellow-bg: #FBF3DB; --pale-yellow-text: #956400;
-    --accent: #1A1A1A;
-    --shadow-soft: 0 1px 3px rgba(0,0,0,0.04);
-    --shadow-hover: 0 2px 8px rgba(0,0,0,0.04);
+    /* C4 幸運五行莫蘭迪 */
+    --gold: #b08d57;        /* 古銅金 · 主 */
+    --gold-light: #c8a76a;  /* 淺金 · 點綴 */
+    --gold-pale: #efe6d3;   /* 淺金底 */
+    --blue: #7e94ab;        /* 幸運霧藍 · 輔 */
+    --blue-pale: #e9edf1;   /* 霧藍底 */
+    --charcoal: #3f3a32;    /* 暖炭 · 文字 */
+    --cream: #f3edde;       /* 奶油白 · 底 */
+    --cream-deep: #ece5d1;  /* 深奶油 */
+    --surface: #faf7ee;     /* 面板 */
+    --silver: #b0a695;      /* 暖銀灰 · 分隔線主 */
+    --hairline: #dcd5c3;    /* 暖銀灰 · 幼線 */
+    --terra: #b37660;       /* 陶土 · 功能/行動 */
+    --terra-pale: #f1e3da;  /* 陶土底 */
+    --deep: #2e2921;        /* 暖深棕 · 書封 */
+    --muted: #8d8574;       /* 暖灰文字 */
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
   body {
-    background: var(--bg);
-    color: var(--text);
+    background: var(--cream);
+    color: var(--charcoal);
     font-family: 'Noto Sans HK', sans-serif;
     font-size: 14px;
-    line-height: 1.7;
+    line-height: 1.75;
     -webkit-font-smoothing: antialiased;
   }
   .serif { font-family: 'Noto Serif HK', serif; }
-  .container { max-width: 640px; margin: 0 auto; padding: 0 16px 48px; }
+  .container { max-width: 640px; margin: 0 auto; padding: 0 20px 56px; }
 
-  header {
-    text-align: center;
-    padding: 40px 16px 24px;
+  /* 紙感噪點 */
+  body::before {
+    content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    opacity: 0.028;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
   }
-  header .kicker {
-    font-size: 11px; letter-spacing: 0.18em; color: var(--text-muted);
-    text-transform: uppercase;
-  }
-  header h1 { font-size: 26px; font-weight: 700; margin-top: 6px; }
-  header .sub { font-size: 12px; color: var(--text-muted); margin-top: 6px; }
+  header, .container, footer { position: relative; z-index: 1; }
 
+  /* ===== 報頭 ===== */
+  header { text-align: center; padding: 46px 20px 26px; }
+  .masthead-kicker {
+    display: flex; align-items: center; gap: 14px; justify-content: center;
+    font-size: 10px; letter-spacing: 0.34em; color: var(--muted); text-transform: uppercase;
+  }
+  .masthead-kicker::before, .masthead-kicker::after {
+    content: ''; height: 1px; width: 46px; background: var(--silver);
+  }
+  header h1 {
+    font-family: 'Noto Serif HK', serif; font-weight: 900;
+    font-size: 27px; letter-spacing: 0.04em; margin-top: 12px; color: var(--charcoal);
+  }
+  header h1 .gold-char { color: var(--gold); }
+  header .sub { font-size: 11.5px; color: var(--muted); margin-top: 8px; letter-spacing: 0.08em; }
+  .masthead-rule {
+    width: 100%; max-width: 640px; margin: 22px auto 0; padding: 0 20px;
+  }
+  .masthead-rule i {
+    display: block; border-top: 1px solid var(--silver);
+    position: relative;
+  }
+  .masthead-rule i::after {
+    content: ''; position: absolute; left: 0; right: 0; top: 3px;
+    border-top: 1px solid var(--hairline);
+  }
+
+  /* ===== 章節標題（編輯式）===== */
   .section-title {
-    font-size: 13px; font-weight: 700; color: var(--text-muted);
-    letter-spacing: 0.06em; margin: 26px 2px 10px;
+    display: flex; align-items: baseline; gap: 10px;
+    margin: 34px 2px 12px; font-size: 12px;
   }
-  .card {
+  .section-title .no {
+    font-family: 'Noto Serif HK', serif; font-weight: 700;
+    color: var(--gold); font-size: 13px; letter-spacing: 0.05em;
+  }
+  .section-title .txt {
+    font-weight: 700; letter-spacing: 0.22em; color: var(--charcoal);
+  }
+  .section-title .rule { flex: 1; border-bottom: 1px solid var(--hairline); transform: translateY(-4px); }
+
+  /* ===== 框框系統 ===== */
+  .panel {
     background: var(--surface);
-    border: 1px solid var(--border);
+    border: 1px solid var(--hairline);
     border-radius: 12px;
-    padding: 16px;
-    box-shadow: var(--shadow-soft);
-    margin-bottom: 10px;
+    padding: 18px 18px 16px;
+    margin-bottom: 12px;
+    box-shadow: 0 1px 2px rgba(62, 47, 22, 0.03);
+    transition: box-shadow 0.25s var(--ease-out);
   }
-  .card-label { font-size: 11px; color: var(--text-muted); letter-spacing: 0.04em; }
-  .card-value { font-size: 20px; font-weight: 700; }
-  .card-value-sm { font-size: 16px; font-weight: 700; }
+  .panel:hover { box-shadow: 0 3px 10px rgba(62, 47, 22, 0.05); }
+
+  .bar-block {
+    border-left: 3px solid var(--gold);
+    padding: 2px 0 2px 12px;
+  }
+  .bar-block.blue { border-left-color: var(--blue); }
+  .bar-block.terra { border-left-color: var(--terra); }
+
+  .inner-frame {
+    background: var(--cream);
+    border: 1px solid var(--hairline);
+    border-radius: 10px;
+    padding: 12px 14px;
+  }
+
+  .stat-row {
+    display: flex; justify-content: space-between; align-items: center; gap: 10px;
+    padding: 9px 2px; border-bottom: 1px dashed var(--silver);
+  }
+  .stat-row:last-of-type { border-bottom: none; }
+  .stat-label { font-size: 12.5px; font-weight: 500; letter-spacing: 0.04em; }
+  .stat-num { font-size: 12px; color: var(--muted); text-align: right; }
+
   .tag {
-    display: inline-block; font-size: 11px; font-weight: 500;
-    padding: 2px 10px; border-radius: 999px; white-space: nowrap;
+    display: inline-block; font-size: 10.5px; font-weight: 500;
+    padding: 2px 10px; border-radius: 3px; white-space: nowrap;
+    letter-spacing: 0.05em;
   }
-  .tag-green { background: var(--pale-green-bg); color: var(--pale-green-text); }
-  .tag-blue { background: var(--pale-blue-bg); color: var(--pale-blue-text); }
-  .tag-yellow { background: var(--pale-yellow-bg); color: var(--pale-yellow-text); }
-  .tag-gray { background: var(--surface-2); color: var(--text-muted); }
-  .tag-red { background: var(--pale-red-bg); color: var(--pale-red-text); }
+  .tag-gold { background: var(--gold-pale); color: var(--gold); border: 1px solid #ddcda9; }
+  .tag-blue { background: var(--blue-pale); color: #5d7389; border: 1px solid #ccd5de; }
+  .tag-terra { background: var(--terra-pale); color: var(--terra); border: 1px solid #e0c8bb; }
+  .tag-gray { background: var(--cream-deep); color: var(--muted); border: 1px solid var(--hairline); }
 
-  .progress-row { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin: 6px 0; }
-  .progress-label { font-size: 13px; font-weight: 500; }
-  .progress-num { font-size: 12px; color: var(--text-muted); }
-  .progress-track { height: 6px; background: var(--surface-2); border-radius: 999px; overflow: hidden; }
-  .progress-fill { height: 100%; background: var(--accent); border-radius: 999px; transition: width 0.4s ease; }
+  .progress-track { height: 5px; background: var(--cream-deep); border: 1px solid var(--hairline); border-radius: 999px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold-light)); border-radius: 999px; transition: width 0.5s var(--ease-out); }
 
-  .info-block p { font-size: 12.5px; color: var(--text); margin: 4px 0; }
-  .mini-note { font-size: 10.5px; color: var(--text-muted); margin-top: 10px; line-height: 1.6; }
+  .info-block p { font-size: 12.5px; margin: 5px 0; }
+  .mini-note { font-size: 10.5px; color: var(--muted); margin-top: 10px; line-height: 1.7; }
+  a { color: #5d7389; }
 
+  /* ===== 十大階段 ===== */
   .stage-item {
-    display: flex; align-items: flex-start; gap: 12px;
-    padding: 12px 2px; border-bottom: 1px solid var(--border);
+    display: flex; gap: 14px; padding: 13px 10px;
+    border-bottom: 1px solid var(--hairline); border-radius: 6px;
   }
   .stage-item:last-child { border-bottom: none; }
   .stage-num {
-    font-family: 'Noto Serif HK', serif; font-size: 18px; font-weight: 700;
-    color: var(--text-muted); min-width: 30px; line-height: 1.4;
+    font-family: 'Noto Serif HK', serif; font-size: 19px; font-weight: 700;
+    color: var(--silver); min-width: 32px; line-height: 1.35; text-align: center;
+    border: 1px solid var(--hairline); border-radius: 8px; height: 36px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--surface);
   }
-  .stage-item.active .stage-num { color: var(--accent); }
-  .stage-item.done .stage-num { color: var(--pale-green-text); }
   .stage-body { flex: 1; }
-  .stage-name { font-size: 13.5px; font-weight: 700; }
-  .stage-desc { font-size: 11.5px; color: var(--text-muted); margin-top: 2px; }
-  .stage-tag { margin-top: 6px; }
+  .stage-name { font-size: 13px; font-weight: 700; letter-spacing: 0.02em; }
+  .stage-desc { font-size: 11px; color: var(--muted); margin-top: 1px; }
+  .stage-tag { margin-top: 5px; }
+  .stage-item.active { background: var(--gold-pale); border: 1px solid #ddcda9; }
+  .stage-item.active .stage-num { color: var(--gold); border-color: var(--gold-light); background: var(--surface); }
+  .stage-item.active .stage-name { color: var(--deep); }
+  .stage-item.done .stage-num { color: var(--gold); border-color: var(--gold-light); }
 
+  /* ===== 課堂 ===== */
+  .lesson { margin-bottom: 12px; }
   .lesson-head {
     display: flex; justify-content: space-between; align-items: center;
     cursor: pointer; -webkit-tap-highlight-color: transparent;
+    padding: 4px 2px;
   }
+  .lesson-head:active { transform: scale(0.99); }
   .lesson-head .left { flex: 1; }
-  .lesson-chev { color: var(--text-muted); font-size: 12px; transition: transform 0.2s ease; }
-  .lesson.open .lesson-chev { transform: rotate(90deg); }
-  .lesson-body { display: none; padding-top: 12px; border-top: 1px dashed var(--border); margin-top: 12px; }
-  .lesson.open .lesson-body { display: block; }
+  .lesson-kicker { font-size: 10px; color: var(--muted); letter-spacing: 0.12em; }
+  .lesson-title {
+    font-family: 'Noto Serif HK', serif; font-size: 16.5px; font-weight: 700; margin-top: 3px;
+  }
+  .lesson-chev {
+    color: var(--gold); font-size: 11px; transition: transform 0.3s var(--ease-out);
+    border: 1px solid var(--hairline); border-radius: 999px;
+    width: 26px; height: 26px; display: flex; align-items: center; justify-content: center;
+    background: var(--surface);
+  }
+  .lesson.open { border-left: 3px solid var(--gold); background: var(--cream); }
+  .lesson.open .lesson-chev { transform: rotate(90deg); border-color: var(--gold-light); }
+  .lesson-body { display: none; padding: 14px 2px 4px; border-top: 1px dashed var(--silver); margin-top: 12px; }
+  .lesson.open .lesson-body { display: block; animation: fadeSection 0.5s var(--ease-out); }
+  @keyframes fadeSection { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 
+  /* 課文內容元素 */
   .kw {
-    font-size: 13.5px; font-weight: 700; margin: 16px 0 6px;
-    padding-left: 10px; border-left: 3px solid var(--accent);
+    font-family: 'Noto Serif HK', serif; font-size: 14.5px; font-weight: 700;
+    margin: 20px 0 8px; padding-left: 11px; border-left: 3px solid var(--gold);
+    color: var(--deep); letter-spacing: 0.03em;
   }
   .lesson-body p { font-size: 13px; margin: 5px 0; }
-  .term { margin: 12px 0; }
-  .term-name { font-size: 13.5px; font-weight: 700; }
-  .term-def { font-size: 12.5px; color: var(--text); }
-  .term-note { font-size: 12px; color: var(--pale-blue-text); background: var(--pale-blue-bg); border-radius: 8px; padding: 6px 10px; margin-top: 4px; }
-  .layer { display: flex; gap: 10px; margin: 12px 0; }
-  .layer-badge {
-    min-width: 44px; height: 26px; border-radius: 8px; background: var(--surface-2);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 11px; font-weight: 700; color: var(--text-muted);
+  .term { margin: 14px 0; padding-bottom: 12px; border-bottom: 1px dashed var(--silver); }
+  .term:last-of-type { border-bottom: none; padding-bottom: 0; }
+  .term-name {
+    font-family: 'Noto Serif HK', serif; font-size: 14px; font-weight: 700;
+    color: var(--deep);
   }
-  .layer.active .layer-badge { background: var(--accent); color: #fff; }
+  .term-def { font-size: 12.5px; margin-top: 2px; }
+  .term-note {
+    font-size: 11.5px; color: #5d7389; background: var(--blue-pale);
+    border-left: 3px solid var(--blue);
+    border-radius: 0 8px 8px 0; padding: 7px 11px; margin-top: 7px; line-height: 1.65;
+  }
+  .layer { display: flex; gap: 12px; margin: 13px 0; }
+  .layer-badge {
+    font-family: 'Noto Serif HK', serif; min-width: 46px; height: 30px;
+    border: 1px solid var(--hairline); border-radius: 8px; background: var(--surface);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; color: var(--muted); letter-spacing: 0.08em;
+  }
+  .layer.hot .layer-badge { background: var(--gold); border-color: var(--gold); color: #fdfaf2; }
   .layer-body { flex: 1; }
   .layer-name { font-size: 13.5px; font-weight: 700; }
   .layer-def { font-size: 12.5px; }
-  .layer-eg { font-size: 11.5px; color: var(--text-muted); }
-  .motto {
-    background: var(--surface-2); border-radius: 12px; padding: 14px;
-    text-align: center; margin: 14px 0;
+  .layer-eg {
+    font-size: 11px; color: var(--muted); margin-top: 1px;
+    padding-left: 10px; border-left: 2px solid var(--hairline);
   }
-  .motto .big { font-family: 'Noto Serif HK', serif; font-size: 16px; font-weight: 700; }
-  .motto .small { font-size: 11.5px; color: var(--text-muted); margin-top: 4px; }
-  .hw-box { border: 1.5px dashed var(--border-strong); border-radius: 12px; padding: 14px; margin: 12px 0; }
+  .motto { margin: 16px 0; }
+  .motto .outer {
+    border: 1px solid var(--silver); border-radius: 12px; padding: 5px;
+    background: var(--surface);
+  }
+  .motto .inner {
+    border: 1px solid var(--gold-light); border-radius: 9px;
+    padding: 15px 14px; text-align: center; background: var(--cream);
+  }
+  .motto .big {
+    font-family: 'Noto Serif HK', serif; font-size: 16px; font-weight: 900;
+    color: var(--deep); letter-spacing: 0.02em;
+  }
+  .motto .small { font-size: 11px; color: var(--muted); margin-top: 6px; }
+  .hw-box {
+    border: 1.5px dashed var(--terra); border-radius: 12px;
+    background: var(--terra-pale); padding: 14px; margin: 14px 0; position: relative;
+  }
+  .hw-tag {
+    position: absolute; top: -9px; left: 14px;
+    background: var(--terra); color: #fdf6f1;
+    font-size: 10px; letter-spacing: 0.22em; font-weight: 500;
+    padding: 1px 10px; border-radius: 3px;
+  }
   .hw-box .fmt {
-    background: var(--surface-2); border-radius: 8px; padding: 8px 10px;
-    font-size: 12px; margin: 8px 0; line-height: 1.6;
+    background: rgba(253, 250, 244, 0.75); border: 1px solid #e0c8bb;
+    border-radius: 8px; padding: 8px 11px; font-size: 11.5px; margin: 8px 0; line-height: 1.65;
   }
   .plist { padding-left: 18px; font-size: 12.5px; }
   .plist li { margin: 3px 0; }
 
+  /* ===== 出場動畫 ===== */
+  .reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.65s var(--ease-out), transform 0.65s var(--ease-out); }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* ===== 頁腳（書封深棕帶）===== */
   footer {
-    text-align: center; padding: 28px 16px 40px;
-    font-size: 11px; color: var(--text-muted); line-height: 1.8;
+    background: var(--deep); color: #cfc6b4;
+    text-align: center; padding: 30px 20px 44px;
+    font-size: 10.5px; letter-spacing: 0.06em; line-height: 2;
   }
-  footer a { color: var(--pale-blue-text); text-decoration: none; font-weight: 500; }
+  footer .gold-rule { width: 40px; height: 1px; background: var(--gold); margin: 0 auto 14px; }
+  footer a { color: var(--gold-light); text-decoration: none; font-weight: 500; }
+  footer a:active { opacity: 0.7; }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="kicker">Personal AI Portfolio Course</div>
-  <h1>🤖 AI Agent 產品導師課程</h1>
+  <div class="masthead-kicker">Personal AI Portfolio Course</div>
+  <h1><span class="gold-char">AI Agent</span> 產品導師課程</h1>
   <div class="sub">商業化 AI 產品 0 → 1 · 技術方案 × 市場價值 × 盈利邏輯</div>
+  <div class="masthead-rule"><i></i></div>
 </header>
 
 <div class="container">
 
-  <!-- 課程現況 -->
-  <section>
-    <p class="section-title">課程現況</p>
-    <div class="card">
-      <div class="progress-row">
-        <span class="progress-label">當前進度</span>
-        <span class="tag tag-yellow" id="cStageTag">—</span>
-      </div>
-      <div class="progress-track" style="margin:8px 0 10px;">
-        <div class="progress-fill" id="cStageBar" style="width:10%;"></div>
-      </div>
-      <div class="progress-row">
-        <span class="progress-label">📘 當前課堂</span>
-        <span class="progress-num" id="cLesson">—</span>
-      </div>
-      <div class="progress-row">
-        <span class="progress-label">📋 作業狀態</span>
-        <span id="cHwStatus">—</span>
-      </div>
-      <div class="progress-row">
-        <span class="progress-label">⏰ 自動運行</span>
-        <span class="progress-num">週一至五 08:00 · 週末休息</span>
-      </div>
-      <div class="mini-note">
-        📊 打卡＋學習成果留言 → <a href="https://zoematszting-bit.github.io/dashboard/#agent" style="color:var(--pale-blue-text); font-weight:500;">Dashboard「Agent」tab</a>
+  <!-- 01 課程現況 -->
+  <p class="section-title reveal"><span class="no">壹</span><span class="txt">課程現況</span><span class="rule"></span></p>
+  <div class="panel reveal">
+    <div class="stat-row">
+      <span class="stat-label">當前進度</span>
+      <span class="tag tag-gold" id="cStageTag">—</span>
+    </div>
+    <div class="progress-track" style="margin:10px 2px 12px;">
+      <div class="progress-fill" id="cStageBar" style="width:10%;"></div>
+    </div>
+    <div class="stat-row">
+      <span class="stat-label">當前課堂</span>
+      <span class="stat-num" id="cLesson">—</span>
+    </div>
+    <div class="stat-row">
+      <span class="stat-label">作業狀態</span>
+      <span id="cHwStatus">—</span>
+    </div>
+    <div class="stat-row">
+      <span class="stat-label">自動運行</span>
+      <span class="stat-num">週一至五 08:00 · 週末休息</span>
+    </div>
+    <div class="mini-note">
+      打卡＋學習成果留言 → <a href="https://zoematszting-bit.github.io/dashboard/#agent">Dashboard「Agent」tab</a>
+    </div>
+  </div>
+
+  <!-- 02 課程總目標 -->
+  <p class="section-title reveal"><span class="no">貳</span><span class="txt">課程總目標</span><span class="rule"></span></p>
+  <div class="panel reveal">
+    <div class="inner-frame">
+      <div class="bar-block">
+        <p style="font-size:12.5px;"><strong>技術側</strong>｜Agent 架構設計 · 容錯機制 · 效果評測 · 成本管控</p>
+        <p style="font-size:12.5px;"><strong>商業側</strong>｜市場分析 · 用戶定位 · 競品差異化 · 定價策略 · 獲客方式</p>
+        <p style="font-size:12.5px;"><strong>最終產出</strong>｜可對外發布嘅個人 AI 作品集，面試講得通「技術＋市場＋盈利」全鏈路</p>
       </div>
     </div>
-  </section>
-
-  <!-- 課程總目標 -->
-  <section>
-    <p class="section-title">課程總目標</p>
-    <div class="card">
-      <div class="info-block">
-        <p><strong>技術側</strong>：Agent 架構設計 · 容錯機制 · 效果評測 · 成本管控</p>
-        <p><strong>商業側</strong>：市場分析 · 用戶定位 · 競品差異化 · 定價策略 · 獲客方式</p>
-        <p><strong>最終產出</strong>：可對外發布嘅個人 AI 作品集，面試講得通「技術＋市場＋盈利」全鏈路</p>
-      </div>
-      <div class="mini-note">
-        案例只用 Zoe 自己嘅產品：打字網站 · Dashboard · 菜單網站 · 考試系統 · 瑜伽筆記 · 學費追蹤 ＋ 計劃中嘅小說 AI 工具 · 文生影片助手
-      </div>
+    <div class="mini-note">
+      案例只用 Zoe 自己嘅產品：打字網站 · Dashboard · 菜單網站 · 考試系統 · 瑜伽筆記 · 學費追蹤 ＋ 計劃中嘅小說 AI 工具 · 文生影片助手
     </div>
-  </section>
+  </div>
 
-  <!-- 十大階段 -->
-  <section>
-    <p class="section-title">十大階段 ·循序漸進</p>
-    <div class="card" id="stageList"></div>
-  </section>
+  <!-- 03 十大階段 -->
+  <p class="section-title reveal"><span class="no">叁</span><span class="txt">十大階段 · 循序漸進</span><span class="rule"></span></p>
+  <div class="panel reveal" id="stageList"></div>
 
-  <!-- 課堂內容 -->
-  <section>
-    <p class="section-title">課堂內容 · 持續更新</p>
-    <div id="lessonList"></div>
-  </section>
+  <!-- 04 課堂內容 -->
+  <p class="section-title reveal"><span class="no">肆</span><span class="txt">課堂內容 · 持續更新</span><span class="rule"></span></p>
+  <div id="lessonList" class="reveal"></div>
 
-  <!-- 過關標準 -->
-  <section>
-    <p class="section-title">過關標準</p>
-    <div class="card">
-      <div class="info-block">
-        <p>① <strong>方案選型正確</strong>：揀啱層級＋講到理由</p>
-        <p>② <strong>市場判斷有據</strong>：目標用戶＋付費理由</p>
-        <p>③ <strong>風險識別</strong>：幻覺／成本／失敗路徑至少一項</p>
-        <p>④ <strong>交付齊全</strong>：按作業模板交齊</p>
-      </div>
-      <div class="mini-note">未過關出鞏固題（唔同場景反覆出）· 連續 2 次過關先算掌握</div>
+  <!-- 05 過關標準 -->
+  <p class="section-title reveal"><span class="no">伍</span><span class="txt">過關標準</span><span class="rule"></span></p>
+  <div class="panel reveal">
+    <div class="info-block" style="padding:2px 2px 0 13px; border-left:3px solid var(--blue);">
+      <p>① <strong>方案選型正確</strong>：揀啱層級＋講到理由</p>
+      <p>② <strong>市場判斷有據</strong>：目標用戶＋付費理由</p>
+      <p>③ <strong>風險識別</strong>：幻覺／成本／失敗路徑至少一項</p>
+      <p>④ <strong>交付齊全</strong>：按作業模板交齊</p>
     </div>
-  </section>
+    <div class="mini-note">未過關出鞏固題（唔同場景反覆出）· 連續 2 次過關先算掌握</div>
+  </div>
 
 </div>
 
 <footer>
+  <div class="gold-rule"></div>
   課程檔案：Zoe工作输出/Agent課程/<br>
-  指令 v2.1 · 每課由 ZCode 派發後更新此頁<br>
-  <span id="verTag">v1 · 2026.09.04</span><br><br>
-  <a href="https://zoematszting-bit.github.io/dashboard/#agent">→ 返 Dashboard 打卡＋留言</a>
+  指令 v2.1 · 每課由 ZCode 派發後更新此頁 · <span id="verTag">v1 · 2026.09.04</span><br><br>
+  <a href="https://zoematszting-bit.github.io/dashboard/#agent">返 Dashboard 打卡＋留言</a>
 </footer>
 
 <script>
 // ===== COURSE_SEED：ZCode 每次派課／點評後更新（同 dashboard AGENT_SEED 同步）=====
 const COURSE = {
-  version: '2026-09-04-v1',
+  version: '2026-09-04-v2',
   currentStage: 1,
   totalStages: 10,
   currentLesson: '第1課｜LLM基礎名詞＋五層方案階梯',
@@ -261,7 +375,7 @@ const COURSE = {
       n: 1, stage: 1, date: '2026-09-04', open: true,
       title: 'LLM 基礎名詞 × 五層方案階梯',
       body: `
-        <div class="kw">📌 學習目標</div>
+        <div class="kw">學習目標</div>
         <ul class="plist">
           <li>識得 5 個產品視角必備 LLM 名詞</li>
           <li>掌握「五層方案階梯」：判斷功能應該用邊層方案</li>
@@ -270,34 +384,34 @@ const COURSE = {
 
         <div class="kw">Part A｜五個必識名詞</div>
         <div class="term">
-          <div class="term-name">🔹 Token（詞元）</div>
+          <div class="term-name">Token（詞元）</div>
           <div class="term-def">AI 讀寫文字嘅計費單位，大約 1 個中文字 ≈ 1-2 token</div>
           <div class="term-note">產品含義：AI 每次處理嘢都係錢——「呢個功能每次呼叫成本幾多」係設計任何 AI 功能前嘅第一條數</div>
         </div>
         <div class="term">
-          <div class="term-name">🔹 上下文窗口（Context Window）</div>
+          <div class="term-name">上下文窗口（Context Window）</div>
           <div class="term-def">AI 一次過「記得」嘅字數上限，超額就會失憶</div>
           <div class="term-note">產品含義：瑜伽筆記成套教材塞唔晒入一次對話——要設計「每次俾 AI 睇邊部分」</div>
         </div>
         <div class="term">
-          <div class="term-name">🔹 幻覺（Hallucination）</div>
+          <div class="term-name">幻覺（Hallucination）</div>
           <div class="term-def">AI 自信老作——答案流暢但係錯</div>
           <div class="term-note">產品含義：考試系統出錯答案＝用戶即走；營養分析「食物熱量必須查證」就係典型人工兜底設計</div>
         </div>
         <div class="term">
-          <div class="term-name">🔹 溫度（Temperature）</div>
+          <div class="term-name">溫度（Temperature）</div>
           <div class="term-def">創意度旋鈕：高溫多變化、低溫穩定</div>
           <div class="term-note">產品含義：小說工具要高溫（求驚喜）、考試出題要低溫（求準確）——同一參數，兩個產品需求相反</div>
         </div>
         <div class="term">
-          <div class="term-name">🔹 System Prompt（系統提示）</div>
+          <div class="term-name">System Prompt（系統提示）</div>
           <div class="term-def">AI 嘅「人設＋規則書」，寫喺對話之前，優先級最高</div>
           <div class="term-note">產品含義：你已經日日用緊——AGENTS.md 就係 ZCode 嘅 system prompt；營養分析規則、課程指令都係同一技術</div>
         </div>
 
         <div class="kw">Part B｜五層方案階梯</div>
         <div class="layer">
-          <div class="layer-badge">第1層</div>
+          <div class="layer-badge">一層</div>
           <div class="layer-body">
             <div class="layer-name">普通 Prompt</div>
             <div class="layer-def">一問一答，冇記憶、冇工具</div>
@@ -305,7 +419,7 @@ const COURSE = {
           </div>
         </div>
         <div class="layer">
-          <div class="layer-badge">第2層</div>
+          <div class="layer-badge">二層</div>
           <div class="layer-body">
             <div class="layer-name">RAG（檢索增強）</div>
             <div class="layer-def">AI 答之前先查你嘅私有資料庫</div>
@@ -313,7 +427,7 @@ const COURSE = {
           </div>
         </div>
         <div class="layer">
-          <div class="layer-badge">第3層</div>
+          <div class="layer-badge">三層</div>
           <div class="layer-body">
             <div class="layer-name">Workflow（固定流程）</div>
             <div class="layer-def">幾個 AI 步驟照劇本串埋，流程開發者話事</div>
@@ -321,7 +435,7 @@ const COURSE = {
           </div>
         </div>
         <div class="layer">
-          <div class="layer-badge">第4層</div>
+          <div class="layer-badge">四層</div>
           <div class="layer-body">
             <div class="layer-name">單 Agent</div>
             <div class="layer-def">AI 自己決定步驟＋可以調用工具</div>
@@ -329,7 +443,7 @@ const COURSE = {
           </div>
         </div>
         <div class="layer">
-          <div class="layer-badge">第5層</div>
+          <div class="layer-badge">五層</div>
           <div class="layer-body">
             <div class="layer-name">多 Agent</div>
             <div class="layer-def">幾個 AI 分工協作，各有角色互相交接</div>
@@ -347,12 +461,15 @@ const COURSE = {
         </ul>
 
         <div class="motto">
-          <div class="big">「能 Prompt 唔 RAG，能 Workflow 唔 Agent」</div>
-          <div class="small">複雜度係成本，唔係賣點——用戶為「解決問題」俾錢，唔為架構俾錢</div>
+          <div class="outer"><div class="inner">
+            <div class="big">「能 Prompt 唔 RAG，能 Workflow 唔 Agent」</div>
+            <div class="small">複雜度係成本，唔係賣點——用戶為「解決問題」俾錢，唔為架構俾錢</div>
+          </div></div>
         </div>
 
         <div class="hw-box">
-          <div class="term-name">✍️ 第一課作業（雙維度實戰）</div>
+          <div class="hw-tag">作 業</div>
+          <p style="font-size:13px; font-weight:700; margin-top:4px;">第一課 · 雙維度實戰</p>
           <div class="fmt">格式：產品｜最想加嘅 AI 功能｜揀嘅層級｜理由（1句）｜市場直覸（1句：邊類人會用＋會唔會俾錢）</div>
           <p style="font-size:12.5px; font-weight:500;">6 個產品：</p>
           <ul class="plist">
@@ -380,13 +497,13 @@ function render() {
   document.getElementById('cLesson').textContent = COURSE.currentLesson;
   const hw = COURSE.homeworkStatus;
   document.getElementById('cHwStatus').innerHTML = hw === '已過關'
-    ? '<span class="tag tag-green">✅ 已過關</span>'
+    ? '<span class="tag tag-gold">✅ 已過關</span>'
     : hw === '已提交' ? '<span class="tag tag-blue">📥 已提交待點評</span>'
-    : '<span class="tag tag-yellow">✍️ 待提交</span>';
+    : '<span class="tag tag-terra">✍️ 待提交</span>';
 
   document.getElementById('stageList').innerHTML = COURSE.stages.map(s => {
     const cls = s.status === 'done' ? 'done' : s.status === 'active' ? 'active' : '';
-    const tag = s.status === 'done' ? '<span class="tag tag-green">✅ 完成</span>'
+    const tag = s.status === 'done' ? '<span class="tag tag-gold">✅ 完成</span>'
       : s.status === 'active' ? '<span class="tag tag-blue">🔵 進行中</span>'
       : '<span class="tag tag-gray">⚪ 未開始</span>';
     return '<div class="stage-item ' + cls + '">' +
@@ -397,17 +514,26 @@ function render() {
   }).join('');
 
   document.getElementById('lessonList').innerHTML = COURSE.lessons.map(l =>
-    '<div class="card lesson' + (l.open ? ' open' : '') + '" id="lesson-' + l.n + '">' +
+    '<div class="panel lesson' + (l.open ? ' open' : '') + '" id="lesson-' + l.n + '">' +
     '<div class="lesson-head" onclick="this.parentNode.classList.toggle(\'open\')">' +
-    '<div class="left"><div class="card-label">階段 ' + l.stage + ' · 第 ' + l.n + ' 課 · ' + l.date + '</div>' +
-    '<div class="card-value-sm">' + esc(l.title) + '</div></div>' +
+    '<div class="left"><div class="lesson-kicker">階段 ' + l.stage + ' · 第 ' + l.n + ' 課 · ' + l.date + '</div>' +
+    '<div class="lesson-title">' + esc(l.title) + '</div></div>' +
     '<div class="lesson-chev">▶</div></div>' +
     '<div class="lesson-body">' + l.body + '</div></div>'
   ).join('');
 
-  document.getElementById('verTag').textContent = 'v1 · ' + COURSE.version.slice(0, 10).replace(/-/g, '.');
+  document.getElementById('verTag').textContent = 'v2 · ' + COURSE.version.slice(0, 10).replace(/-/g, '.');
 }
 render();
+
+// ===== 出場動畫（IntersectionObserver）=====
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach((el, i) => {
+  el.style.transitionDelay = (i % 4) * 70 + 'ms';
+  io.observe(el);
+});
 </script>
 
 </body>
